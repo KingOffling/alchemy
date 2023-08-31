@@ -22,6 +22,7 @@ function App() {
     const concordRef = useRef(null);
     const wagdieRef = useRef(null);
 
+
     //////////////////////////////////////////////////////
     // SUPER IMPORTANT SECTION -- UPDATE AS NEW TOCS ADDED
     //////////////////////////////////////////////////////
@@ -72,6 +73,9 @@ function App() {
         'Mossy Ball'
     ];
     //////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////
+
+
 
     const connectWallet = async () => {
         if (window.ethereum) {
@@ -181,6 +185,9 @@ function App() {
         setIsLoadingConcordTokens(false);
     };
 
+
+
+
     const toggleTokenSelection = (tokenIdWithPrefix) => {
         setHasBeenSelected(true); // Set this to true as a token has been selected.
         if (selectedTokens.includes(tokenIdWithPrefix)) {
@@ -193,6 +200,7 @@ function App() {
             setFirstTokenSelected(true);
         }
     };
+
 
     const sortedTokens = [...wagdieNFTs].sort((a, b) => {
         const aIsSelected = selectedTokens.includes(a.id);
@@ -209,8 +217,12 @@ function App() {
             const maxTokensInOneRow = Math.floor(0.95 * screenWidth / tokenContainerWidth);
             const numberOfRows = Math.ceil(numberOfTokens / maxTokensInOneRow);
 
-            if (concordRef.current)
-            {setIsConcordOverflowing(concordRef.current.scrollHeight > concordRef.current.clientHeight);}
+            if (concordRef.current) {
+               // const isOverflowing = concordRef.current.scrollHeight > concordRef.current.clientHeight ||
+                 //   numberOfRows * 100 > concordRef.current.clientHeight; // Assuming each token is 100px tall
+
+                setIsConcordOverflowing(concordRef.current.scrollHeight > concordRef.current.clientHeight);
+            }
 
             if (wagdieRef.current) {
                 const isOverflowing = wagdieRef.current.scrollHeight > wagdieRef.current.clientHeight ||
