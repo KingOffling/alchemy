@@ -1,0 +1,208 @@
+/* General Layout */
+.App {
+  text-align: center;
+}
+
+.App-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 15px;
+  display: flex;
+  align-items: center;
+  background-color: #161616;
+  padding: 1rem;
+  z-index: 1000;
+}
+
+.account-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.account-button:hover {
+  background-color: #0056b3;
+}
+
+/* Section Headers */
+.section-header {
+  font-size: 30px;
+  margin-top: 80px;
+  text-align: center;
+}
+
+/* Concord and WAGDIE Boxes */
+.toc-box,
+.wagdie-box {
+  width: 90%;
+  margin: 20px auto;
+  border-radius: 20px;
+  background-color: #c5c4c4;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Tokens */
+.token-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 5px;
+  height: calc(100px + 4em); /* Adjusted to fit image and 3 lines of text */
+}
+
+.token-image {
+  width: 100px;
+  height: 100px;
+}
+
+.token-id-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  color: black;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 4em;  /* Fixed height to ensure up to 3 lines */
+  word-break: break-all;  /* Breaking text to fit */
+  text-align: center;  /* Text alignment */
+}
+
+/* WAGDIE Text */
+.wagdie-token-id-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #333;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 1.2em;
+  word-break: break-all;
+  text-align: center;
+}
+
+.selected {
+  border: 0px solid blue;
+  box-sizing: border-box;.App {
+    text-align: center;
+    font-family: Arial, sans-serif;
+  }
+  
+  .App-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #161616;
+    padding: 1rem;
+    z-index: 1000;
+  }
+  
+  .account-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 0.3rem 0.6rem;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .account-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .section-header {
+    font-size: 2rem;
+    margin-top: 80px;
+    text-align: center;
+  }
+  
+  .toc-box,
+  .wagdie-box {
+    width: 90%;
+    margin: 1rem auto;
+    border-radius: 1.25rem;
+    background-color: #f2f2f2;
+    box-shadow: 0 0 0.625rem rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .token-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0.3125rem;
+    height: calc(100px + 4em);
+  }
+  
+  .token-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+  
+  .token-id-text,
+  .wagdie-token-id-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #333;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 1em;
+    word-break: break-all;
+    text-align: center;
+  }
+  
+  .unselected {
+    opacity: 0.3;
+  }
+  
+  .selected {
+    opacity: 1;
+  }
+  
+  .expand-collapse {
+    text-align: center;
+    cursor: pointer;
+  }
+  
+  opacity: 1;
+}
+
+.unselected,
+.unselected img,
+.unselected a {
+  opacity: 0.3;
+}
+
+/* Expand-Collapse Button */
+.expand-collapse {
+  text-align: center;
+  cursor: pointer;
+}
