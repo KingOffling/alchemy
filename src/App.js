@@ -22,7 +22,6 @@ function App() {
     const concordRef = useRef(null);
     const wagdieRef = useRef(null);
 
-
     //////////////////////////////////////////////////////
     // SUPER IMPORTANT SECTION -- UPDATE AS NEW TOCS ADDED
     //////////////////////////////////////////////////////
@@ -68,20 +67,11 @@ function App() {
         'Bloody Crow\'s Talon',
         'Felfrost',
         'Fly',
-        'Chosen Fly TESTING',
+        'Chosen Fly',
         'Sparkling Fly',
         'Mossy Ball'
     ];
     //////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////
-
-
-    useEffect(() => {
-        if (account) {
-            fetchWagdieNFTs(account);
-            checkConcordOwnership(account);
-        }
-    }, [account]);
 
     const connectWallet = async () => {
         if (window.ethereum) {
@@ -93,37 +83,14 @@ function App() {
         }
     };
 
-    const fetchWagdieNFTs = async (userAccount) => {
-        const response = await axios.post(
-            'https://api.thegraph.com/subgraphs/name/wagdie/wagdieworld-mainnet',
-            {
-                query: `{
-          characters(where: {owner: "${userAccount}"}) {
-            id
-            burned
-            infected
-            searedConcord {
-              id
-            }
-          }
-        }`
-            }
-        );
-        setWagdieNFTs(response.data.data.characters.filter(character => !character.burned));
+    useEffect(() => {
+        if (account) {
+          fetchWagdieNFTs(account);
+          checkConcordOwnership(account);
+        }
+      }, [account]);
 
-        const attributes = {};
-        response.data.data.characters.forEach((character) => {
-            if (!character.burned) {
-                attributes[character.id] = {
-                    infected: character.infected,
-                    seared: character.searedConcord ? true : false,
-                };
-            }
-        });
-        setWagdieTokenAttributes(attributes);
-    };
-
-
+    
     const checkConcordOwnership = async (userAccount) => {
         setIsLoadingConcordTokens(true);
         if (!window.ethereum && !window.web3) {
@@ -155,7 +122,64 @@ function App() {
         setIsLoadingConcordTokens(false);
     };
 
+    const fetchWagdieNFTs = async (userAccount) => {
+        const response = await axios.post(
+            'https://api.thegraph.com/subgraphs/name/wagdie/wagdieworld-mainnet',
+            {
+                query: `{
+          characters(where: {owner: "${userAccount}"}) {
+            id
+            burned
+            infected
+            searedConcord {
+              id
+            }
+          }
+        }`
+            }
+        );
+        setWagdieNFTs(response.data.data.characters.filter(character => !character.burned));
 
+        const attributes = {};
+        response.data.data.characters.forEach((character) => {
+            if (!character.burned) {
+                attributes[character.id] = {
+                    infected: character.infected,
+                    seared: character.searedConcord ? true : false,
+                };
+            }
+        });
+        setWagdieTokenAttributes(attributes);
+
+        setIsLoadingConcordTokens(true);
+        if (!window.ethereum && !window.web3) {
+            console.error('Ethereum provider not available');
+            return;
+        }
+
+        const web3 = new Web3(window.ethereum || window.web3.currentProvider);
+        const contractABI = concordABI;
+        const contractAddress = "0x1d38150f1Fd989Fb89Ab19518A9C4E93C5554634";
+        const contract = new web3.eth.Contract(contractABI, contractAddress);
+
+        let ownedTokens = [];
+
+        for (let i = 1; i <= highestTokenId; i++) {
+            setCurrentTokenName(tokenNames[i - 1]);  // Update the current token name
+            try {
+                const balance = await contract.methods.balanceOf(userAccount, i).call();
+                if (Number(balance) > 0) {
+                    console.log(`Token ID ${i} is owned by user with a balance of ${balance}`);
+                    ownedTokens.push(i);
+                }
+            } catch (error) {
+                console.error(`Error fetching token ID ${i}: ${error.message}`);
+            }
+        }
+
+        setConcordTokens(ownedTokens);
+        setIsLoadingConcordTokens(false);
+    };
 
     const toggleTokenSelection = (tokenIdWithPrefix) => {
         setHasBeenSelected(true); // Set this to true as a token has been selected.
@@ -169,7 +193,6 @@ function App() {
             setFirstTokenSelected(true);
         }
     };
-
 
     const sortedTokens = [...wagdieNFTs].sort((a, b) => {
         const aIsSelected = selectedTokens.includes(a.id);
@@ -186,12 +209,8 @@ function App() {
             const maxTokensInOneRow = Math.floor(0.95 * screenWidth / tokenContainerWidth);
             const numberOfRows = Math.ceil(numberOfTokens / maxTokensInOneRow);
 
-            if (concordRef.current) {
-                const isOverflowing = concordRef.current.scrollHeight > concordRef.current.clientHeight ||
-                    numberOfRows * 100 > concordRef.current.clientHeight; // Assuming each token is 100px tall
-
-                setIsConcordOverflowing(concordRef.current.scrollHeight > concordRef.current.clientHeight);
-            }
+            if (concordRef.current)
+            {setIsConcordOverflowing(concordRef.current.scrollHeight > concordRef.current.clientHeight);}
 
             if (wagdieRef.current) {
                 const isOverflowing = wagdieRef.current.scrollHeight > wagdieRef.current.clientHeight ||
