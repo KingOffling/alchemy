@@ -87,6 +87,14 @@ function App() {
         }
     };
 
+    useEffect(() => {
+        if (account) {
+          fetchWagdieNFTs(account);
+          checkConcordOwnership(account);
+        }
+      }, [account,checkConcordOwnership, fetchWagdieNFTs]);
+
+    
     const checkConcordOwnership = async (userAccount) => {
         setIsLoadingConcordTokens(true);
         if (!window.ethereum && !window.web3) {
@@ -176,13 +184,6 @@ function App() {
         setConcordTokens(ownedTokens);
         setIsLoadingConcordTokens(false);
     };
-
-    useEffect(() => {
-        if (account) {
-          fetchWagdieNFTs(account);
-          checkConcordOwnership(account);
-        }
-      }, [account,checkConcordOwnership, fetchWagdieNFTs]);
 
 
 
