@@ -187,7 +187,6 @@ function App() {
 
 
 
-
     const toggleTokenSelection = (tokenIdWithPrefix) => {
         setHasBeenSelected(true); // Set this to true as a token has been selected.
         if (selectedTokens.includes(tokenIdWithPrefix)) {
