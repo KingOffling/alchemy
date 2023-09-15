@@ -92,7 +92,7 @@ function App() {
           fetchWagdieNFTs(account);
           checkConcordOwnership(account);
         }
-      }, [account]);
+      }, [account,checkConcordOwnership, fetchWagdieNFTs]);
 
     
     const checkConcordOwnership = async (userAccount) => {
